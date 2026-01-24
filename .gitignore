@@ -1,0 +1,42 @@
+# Node / npm
+
+node_modules/
+npm-debug.log*
+package-lock.json
+
+# Environment variables
+
+.env
+.env.*
+
+# Logs
+
+logs/
+*.log
+
+# Runtime files
+
+pids/
+*.pid
+*.pid.lock
+
+# MongoDB local data (if any)
+
+data/
+*.db
+
+# Coverage / reports
+
+coverage/
+
+# OS / Editor
+
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Temp files
+
+tmp/
+temp/
