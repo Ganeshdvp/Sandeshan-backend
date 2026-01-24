@@ -11,7 +11,7 @@
         - import mongoose from 'mongoose';
 
         const connectDB = async ()=>{
-               await mongoose.connect('mongodb+srv://sandeshan_username:COtg7RpZEgkqLHeU@sandeshan.7nbsxl8.mongodb.net/users')
+               await mongoose.connect(<Add connection string>)
         }
 
         export default connectDB;
@@ -57,33 +57,34 @@
 - # Task-3
 - create a utils folder
    - create validations.js file to validate api level because dont NEVER trust the req.body
-      - import validator from 'validator';
+   - import validator from 'validator';
 
-      export const validateSignUpData = (req)=>{
-        const {firstName, lastName, emailId, password, age, gender, location, ProfileImage, bgImage, about} = req;
+export const validateSignUpData = (req)=>{
+    const {firstName, lastName, emailId, password, age, gender, location, ProfileImage, bgImage, about} = req;
 
-        if(!firstName || !lastName){
-             throw new Error("Name is not valid!")
-        }
-         else if(firstName < 4 || firstName > 50){
-            throw new Error("Characters must be in 4-50")
-        }
-        else if(lastName < 4 || lastName > 50){
-            throw new Error("Characters must be in 4-50")
-        }
-        else if(!validator.isEmail(emailId)){
-            throw new Error("Email is not valid format!")
-        }
-        else if(!validator.isStrongPassword(password)){
-            throw new Error("Enter a strong password!")
-        }
-        else if(age<18 || age>80){
-            throw new Error("Age must be in 18-80!")
-        }
-        else if(!['male','female','others'].includes(gender)){
-            throw new Error("Gender is not valid!")
-        }
+    if(!firstName || !lastName){
+        throw new Error("Name is not valid!")
     }
+    else if(firstName < 4 || firstName > 50){
+        throw new Error("Characters must be in 4-50")
+    }
+    else if(lastName < 4 || lastName > 50){
+        throw new Error("Characters must be in 4-50")
+    }
+    else if(!validator.isEmail(emailId)){
+        throw new Error("Email is not valid format!")
+    }
+    else if(!validator.isStrongPassword(password)){
+        throw new Error("Enter a strong password!")
+    }
+    else if(age<18 || age>80){
+        throw new Error("Age must be in 18-80!")
+    }
+    else if(!['male','female','others'].includes(gender)){
+        throw new Error("Gender is not valid!")
+    }
+}
+
 - In server.js file
     - /signup 
        - validateSignUpData(req.body);
@@ -140,7 +141,7 @@
                 }
 
                 // validate token
-                const decoded = await jwt.verify(token, "GANesh@515")
+                const decoded = await jwt.verify(token, "<secret_code>")
                 const {_id} = decoded;
 
                 // find user
