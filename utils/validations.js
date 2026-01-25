@@ -25,3 +25,28 @@ export const validateSignUpData = (req)=>{
         throw new Error("Gender is not valid!")
     }
 }
+
+export const validateEditProfileData = (req)=>{
+    const ALLOWED_DATA = [
+      "firstName",
+      "lastName",
+      "age",
+      "gender",
+      "location",
+      "ProfileImage",
+      "bgImage",
+      "about",
+    ];
+
+     const isUpdatedAllowed = Object.keys(req).every((value) => {  // true or false
+        return ALLOWED_DATA.includes(value);  
+    });
+
+    return isUpdatedAllowed;
+}
+
+export const validateEditPasswordData = (req)=>{
+    if(!validator.isStrongPassword(req)){
+        throw new Error("Password invalid")
+    }
+}

@@ -1,5 +1,46 @@
 # Sandeshan Backend
 
+
+# API Design
+
+Authenticated
+- POST /signup
+- POST /login
+- DELETE /logout
+
+Profile
+- GET /profile
+- PATCH /profile/edit
+- PATCH /password
+
+All users
+- GET /users
+- GET /users/:emailId
+- POST /request  -- friend request
+- DELETE /block
+
+All requests
+- GET /requests
+- GET /requests/:emailId
+- POST /requests/accept
+- DELETE /requests/reject
+- DELETE /request/block
+
+All friends
+- GET /friends
+- GET /friends/:emailId
+- DELETE /friend/unfriend
+- DELETE /friend/block
+
+
+Blocked users
+- GET /users/block
+
+
+
+
+
+
 # Task-1
 - npm init
 - npm install express nodemon
@@ -161,3 +202,52 @@ export const validateSignUpData = (req)=>{
 - use this auth to the requests.
 - added the expiration of token
   - { expiresIn: '1d' }
+
+# Task-6
+- create the routes folder to refactor all the apis
+   - create authRouter.js file
+      - const authRouter = express.Router();
+
+        authRouter.post('/signup', function)
+        authRouter.post('/signin', function)
+        authRouter.post('/signout', function)
+    - create profileRouter.js file
+      - const profileRouter = express.Router();
+
+        profileRouter.get('/profile', function)
+        profileRouter.patch('/profile/edit', function)
+        profileRouter.patch('/profile/forgot-password', function)
+
+- in utils folder > in validations.js file
+  - add validateEditProfileData function like below,
+     export const validateEditProfileData = (req)=>{
+    const ALLOWED_DATA = [
+      "firstName",
+      "lastName",
+      "age",
+      "gender",
+      "location",
+      "ProfileImage",
+      "bgImage",
+      "about",
+    ];
+
+     const isUpdatedAllowed = Object.keys(req).every((value) => {  // true or false
+        return ALLOWED_DATA.includes(value);  
+    });
+
+    return isUpdatedAllowed;
+}
+   - add validateEditPasswordData function like below,
+export const validateEditPasswordData = (req)=>{
+    if(!validator.isStrongPassword(req)){
+        throw new Error("Password invalid")
+    }
+}
+
+- in server.js file clear the api's logic
+import { authRouter } from './routes/authRouter.js';
+import { profileRouter } from './routes/profileRouter.js';
+
+app.use('/', authRouter);
+app.use('/', profileRouter);
