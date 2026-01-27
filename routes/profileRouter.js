@@ -10,10 +10,10 @@ export const profileRouter = express.Router();
 profileRouter.get('/profile', userAuth, async (req,res)=>{
   try{
     const user = req.user;
-    res.send(user)
+    res.json({data: user})
   }
   catch(err){
-    res.status(400).send("Something went wrong! " + err.message);
+    res.status(400).json({message: "Something went wrong! " + err.message});
   }
 })
 
@@ -32,10 +32,10 @@ profileRouter.patch("/profile/edit", userAuth, async (req, res) => {
 
     await loggedInUser.save()
 
-    res.send(`${loggedInUser.firstName} your profile updated successfully!`);
+    res.json({message: `${loggedInUser.firstName} your profile updated successfully!`});
 
   } catch (err) {
-    res.status(400).send("Failed to update your profile!" + err.message);
+    res.status(400).json({message: "Failed to update your profile!" + err.message});
   }
 });
 
@@ -52,9 +52,9 @@ profileRouter.patch('/profile/forgot-password', userAuth, async (req,res)=>{
 
         await loggedInUser.save();
 
-        res.send(`${loggedInUser.firstName} your password updated successfully!`)
+        res.json({message: `${loggedInUser.firstName} your password updated successfully!`})
     }
     catch(err){
-        res.status(400).send("Failed to update password!")
+        res.status(400).json({message: "Failed to update password!"})
     }
 })

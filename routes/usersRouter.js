@@ -13,10 +13,10 @@ usersRouter.get('/users', async (req,res)=>{
     // find in DB
     const users = await User.find({})
     // send response back
-    res.send(users)
+    res.json({data: users})
     }
     catch(err){
-        res.status(400).send("Failed to fetch users! " + err.message);
+        res.status(400).json({message: "Failed to fetch users! " + err.message});
     }
 })
 
@@ -62,11 +62,10 @@ usersRouter.post('/user/requested/:id',userAuth, async (req,res)=>{
         await requestData.save();
 
         // send response back
-        res.send(`${req.user.firstName} is ${status} to ${toUserData.firstName}`)
+        res.json({message: `${req.user.firstName} is ${status} to ${toUserData.firstName}`})
     }
     catch(err){
-        res.status(400).send("ERROR : " + err.message)
+        res.status(400).json({message: "ERROR : " + err.message})
     }
 })
 
-// block user

@@ -15,12 +15,14 @@ requestRouter.get('/requests',userAuth, async (req,res)=>{
         const data = await UserRequests.find({
             toUserId : loggedInUser._id,
             status : 'requested'
-        }).populate("fromUserId", ["firstName", "lastName", "age", "gender","location","ProfileImage","bgImage","about"])
+        }).populate("fromUserId", ["firstName", "lastName", "age", "gender","location","ProfileImage","bgImage","about"]);
 
-        res.send(data)
+        const exactData = data.map((row)=> row.fromUserId);
+
+        res.json({data: exactData})
     }
     catch(err){
-        res.status(400).send("ERROR : " + err.message);
+        res.status(400).json({message: "ERROR : " + err.message});
     }
 })
 
@@ -76,10 +78,10 @@ requestRouter.post('/requests/:status/:id',userAuth, async (req,res)=>{  // acce
 
         await requestData.save()
 
-        res.send(`${fromUserData.firstName} is ${status} ${isToUserExists.firstName}`)
+        res.json({message: `${fromUserData.firstName} is ${status} ${isToUserExists.firstName}`})
     }
     catch(err){
-        res.status(400).send("ERROR : " + err.message)
+        res.status(400).json({message: "ERROR : " + err.message})
     }
 })
 

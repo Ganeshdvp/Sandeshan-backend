@@ -9,11 +9,12 @@ const requestsSchema = new mongoose.Schema({
     toUserId : {
         type : mongoose.Schema.Types.ObjectId,
         required : true,
+        ref: "User"
     },
     status : {
         type : String,
         enum : {
-            values: ['requested', 'accepted', 'rejected'],
+            values: ['requested', 'accepted', 'rejected','blocked'],
             message: `{VALUE} is incorrect status type!`
         },
         required : true

@@ -8,6 +8,8 @@ import { profileRouter } from './routes/profileRouter.js';
 import { usersRouter } from './routes/usersRouter.js';
 import { requestRouter } from "./routes/requestRouter.js";
 import { friendsRouter } from './routes/friendsRouter.js';
+import { blockRouter } from './routes/blockRouter.js';
+
 
 const app = express();
 
@@ -26,6 +28,7 @@ app.use('/', profileRouter);
 app.use('/', usersRouter);
 app.use('/', requestRouter);
 app.use('/', friendsRouter);
+app.use('/', blockRouter)
 
 
 

@@ -36,10 +36,10 @@ authRouter.post("/signup", async (req, res) => {
   await userData.save();
 
   // send response to back
-  res.send("Registration is successfully completed");
+  res.json({message: "Registration is successfully completed"});
 
   } catch (err) {
-    res.status(400).send("Failed to register : " + err.message);
+    res.status(400).json({message: "Failed to register : " + err.message});
   }
 });
 
@@ -63,14 +63,14 @@ authRouter.post('/signin', async (req,res)=>{
     const token = jwt.sign({_id : isUserPresent._id},process.env.JWT_SECRET, { expiresIn: '1d' });
     // set in cookie and send response
     res.cookie("token", token)
-    res.send("Sign in successfully!")
+    res.json({message: "Sign in successfully!"})
    }
    else{
     throw new Error("Invalid credentials!")
    }
    }
    catch(err){
-    res.status(400).send("Something went wrong : " + err.message);
+    res.status(400).json({message: "Something went wrong : " + err.message});
    }
 })
 
@@ -82,9 +82,9 @@ authRouter.post('/signout',userAuth, async (req,res)=>{
             expires: new Date(Date.now())
         })
         
-        res.send("sign out successfully!")
+        res.json({message: "Sign out successfully!"})
     }
     catch(err){
-        res.status(400).send("Failed to sign out!" + err.message);
+        res.status(400).json({message: "Failed to sign out!" + err.message});
     }
 })
