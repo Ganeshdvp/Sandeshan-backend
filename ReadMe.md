@@ -15,16 +15,15 @@ Profile
 
 All users
 - GET /users
-- GET /users/:emailId
-- POST /request  -- friend request
-- DELETE /block
+- GET /users/:emailId  -- filter
+- POST /user/send-request  -- friend request
 
 All requests
 - GET /requests
-- GET /requests/:emailId
+- GET /requests/:emailId  -- filter
 - POST /requests/accept
 - DELETE /requests/reject
-- DELETE /request/block
+
 
 All friends
 - GET /friends
@@ -251,3 +250,9 @@ import { profileRouter } from './routes/profileRouter.js';
 
 app.use('/', authRouter);
 app.use('/', profileRouter);
+
+# Task-7
+- create requests.js file in models folder
+- create usersRouter.js file in routes folder
+    - write GET /users Api logic
+    - write POST /user/:status/:id Api logic

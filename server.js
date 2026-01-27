@@ -5,7 +5,9 @@ import dotenv from 'dotenv';
 import cookieParser from "cookie-parser";
 import { authRouter } from './routes/authRouter.js';
 import { profileRouter } from './routes/profileRouter.js';
-
+import { usersRouter } from './routes/usersRouter.js';
+import { requestRouter } from "./routes/requestRouter.js";
+import { friendsRouter } from './routes/friendsRouter.js';
 
 const app = express();
 
@@ -21,6 +23,9 @@ app.use(cookieParser())
 // routes
 app.use('/', authRouter);
 app.use('/', profileRouter);
+app.use('/', usersRouter);
+app.use('/', requestRouter);
+app.use('/', friendsRouter);
 
 
 
