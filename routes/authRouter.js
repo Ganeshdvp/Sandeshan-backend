@@ -58,12 +58,15 @@ authRouter.post('/signin', async (req,res)=>{
    // comparing passwords and it return boolean value
    const isPasswordValid = await bcrypt.compare(password, isUserPresent.password)
 
+   // logged User without sending password back
+   const loggedUserData = await User.findOne({emailId: emailId}).select("firstName lastName emailId age gender location ProfileImage bgImage about")
+
    if(isPasswordValid){
     // creating jwt token
     const token = jwt.sign({_id : isUserPresent._id},process.env.JWT_SECRET, { expiresIn: '1d' });
     // set in cookie and send response
     res.cookie("token", token)
-    res.json({message: "Sign in successfully!"})
+    res.json({message: "Sign in successfully!", data: loggedUserData})
    }
    else{
     throw new Error("Invalid credentials!")

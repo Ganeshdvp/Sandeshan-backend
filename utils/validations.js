@@ -26,6 +26,12 @@ export const validateSignUpData = (req)=>{
     }
 }
 
+export const validateSignInPasswordData = (req)=>{
+    if(!validator.isStrongPassword(req)){
+        throw new Error("Password invalid")
+    }
+}
+
 export const validateEditProfileData = (req)=>{
     const ALLOWED_DATA = [
       "firstName",
@@ -50,3 +56,4 @@ export const validateEditPasswordData = (req)=>{
         throw new Error("Password invalid")
     }
 }
+

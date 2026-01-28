@@ -9,10 +9,16 @@ import { usersRouter } from './routes/usersRouter.js';
 import { requestRouter } from "./routes/requestRouter.js";
 import { friendsRouter } from './routes/friendsRouter.js';
 import { blockRouter } from './routes/blockRouter.js';
+import cors from 'cors';
 
 
 const app = express();
 
+// cors
+app.use(cors({
+  origin: "http://localhost:5173",
+  credentials: true
+}));
 // convert data to json
 app.use(express.json());
 // environment variables enable
