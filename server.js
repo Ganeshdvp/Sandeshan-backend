@@ -10,6 +10,9 @@ import { requestRouter } from "./routes/requestRouter.js";
 import { friendsRouter } from './routes/friendsRouter.js';
 import { blockRouter } from './routes/blockRouter.js';
 import cors from 'cors';
+import {createServer} from 'http';
+import { initialSocketConnection } from './utils/socket.js';
+
 
 
 const app = express();
@@ -27,23 +30,24 @@ dotenv.config();
 app.use(cookieParser())
 
 
-
 // routes
 app.use('/', authRouter);
 app.use('/', profileRouter);
 app.use('/', usersRouter);
 app.use('/', requestRouter);
 app.use('/', friendsRouter);
-app.use('/', blockRouter)
+app.use('/', blockRouter);
 
 
-
+// websocket
+const httpServer = createServer(app);
+initialSocketConnection(httpServer);
 
 // database connection
 connectDB()
   .then(() => {
     console.log("Database connected successfully");
-    app.listen(process.env.PORT, () => {
+    httpServer.listen(process.env.PORT, () => {
       console.log(`server running successfully ${process.env.PORT}`);
     });
   })

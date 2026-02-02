@@ -8,7 +8,7 @@ export const requestRouter = express.Router();
 
 
 // fetching all requests
-requestRouter.get('/requests',userAuth, async (req,res)=>{
+requestRouter.get('/requests', userAuth, async (req,res)=>{
     try{
         const loggedInUser = req.user;
 
@@ -33,17 +33,19 @@ requestRouter.post('/requests/:status/:id',userAuth, async (req,res)=>{  // acce
         const toUserId = req.params.id;
         const fromUserData = req.user
 
-        // validate
+        // validate status
         const ALLOWED_STATUS = ['accepted', 'rejected'];
         if(!ALLOWED_STATUS.includes(status)){
             throw new Error(`${status} is incorrect!`)
         }
 
+        // find user in Db
         const isToUserExists = await User.findById(toUserId);
         if(!isToUserExists){
             throw new Error("User Not Found!");
         }
 
+        // validate id's
         if(toUserId == fromUserData._id){
             throw new Error(`Cannot ${status} your self!`)
         }
@@ -69,6 +71,9 @@ requestRouter.post('/requests/:status/:id',userAuth, async (req,res)=>{  // acce
         if(isRequestExists){
             throw new Error(`${fromUserData.firstName} is already ${isRequestExists.status} ${isToUserExists.firstName}`)
         }
+
+        // remove from requests
+        await UserRequests.findOneAndDelete({fromUserId: toUserId})
 
         const requestData = new UserRequests({
             fromUserId: fromUserData._id,

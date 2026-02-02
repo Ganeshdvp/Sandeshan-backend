@@ -64,7 +64,7 @@ const usersSchema = new mongoose.Schema({
     ProfileImage:{
         type: String,
         require:true,
-        default: "https://img.freepik.com/free-vector/smiling-young-man-illustration_1308-174669.jpg?semt=ais_hybrid&w=740&q=80",
+        default: "https://img.freepik.com/premium-vector/user-profile-icon-circle_1256048-12499.jpg?semt=ais_hybrid&w=740&q=80",
         validate: {
             validator: (value)=>{
                 if(!validator.isURL(value)){
@@ -76,7 +76,7 @@ const usersSchema = new mongoose.Schema({
     bgImage:{
         type: String,
         require:true,
-        default: "https://media.vanityfair.com/photos/5f5245d91e10df7a77868af6/16:9/w_1280,c_limit/avatar-the-last-airbender.jpg",
+        default: "https://www.creativefabrica.com/wp-content/uploads/2019/02/User-icon-EPS10-by-Kanggraphic.jpg",
         validate: {
             validator: (value)=>{
                 if(!validator.isURL(value)){

@@ -8,7 +8,7 @@ export const userAuth = async (req,res,next)=>{
     const {token} = req.cookies
 
     if(!token){
-      throw new Error("Token not found!")
+      res.status(401).json({message: "Your are not authorized!"})
     }
 
     // validate token

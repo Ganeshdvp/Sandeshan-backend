@@ -34,9 +34,10 @@ authRouter.post("/signup", async (req, res) => {
 
   // saving data on DB
   await userData.save();
+  
 
   // send response to back
-  res.json({message: "Registration is successfully completed"});
+  res.json({message: "Registration is successfully completed", data: userData});
 
   } catch (err) {
     res.status(400).json({message: "Failed to register : " + err.message});
@@ -73,7 +74,7 @@ authRouter.post('/signin', async (req,res)=>{
    }
    }
    catch(err){
-    res.status(400).json({message: "Something went wrong : " + err.message});
+    res.status(400).json({message: err.message});
    }
 })
 

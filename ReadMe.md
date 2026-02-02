@@ -256,3 +256,20 @@ app.use('/', profileRouter);
 - create usersRouter.js file in routes folder
     - write GET /users Api logic
     - write POST /user/:status/:id Api logic
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Websockets
+- Install websockets
+    - npm install socket.io
+- 
