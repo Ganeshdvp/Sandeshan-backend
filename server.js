@@ -12,6 +12,7 @@ import { blockRouter } from './routes/blockRouter.js';
 import cors from 'cors';
 import {createServer} from 'http';
 import { initialSocketConnection } from './utils/socket.js';
+import { chatRouter } from './routes/chatRouter.js';
 
 
 
@@ -37,6 +38,7 @@ app.use('/', usersRouter);
 app.use('/', requestRouter);
 app.use('/', friendsRouter);
 app.use('/', blockRouter);
+app.use('/', chatRouter)
 
 
 // websocket

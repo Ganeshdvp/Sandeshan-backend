@@ -1,5 +1,7 @@
 import { Server } from "socket.io";
 import crypto from 'crypto';
+import { Chat } from "../models/chat.js";
+import { User } from '../models/users.js';
 
 const getRoomId = (loggedInUserId, targetId)=>{
   return crypto.createHash("sha256").update([loggedInUserId,targetId].sort().join('$')).digest("hex");
@@ -15,22 +17,53 @@ export const initialSocketConnection = (httpServer) => {
 
       io.on("connection", (socket) => {
         // handlers
-        socket.on("joinChat",({firstName,ProfileImage, loggedInUserId, targetId})=>{
+        socket.on("joinChat",async ({firstName,ProfileImage, loggedInUserId, targetId})=>{
           const roomId = getRoomId(loggedInUserId, targetId);
+
+          const targetUser = await User.findById(targetId).select("firstName");
+
           console.log(firstName + " is joined to " + roomId);
+          console.log(targetUser.firstName);
+
           socket.join(roomId);
+
+          io.to(roomId).emit("joinedRoom",{targetName : targetUser?.firstName})
         }),
 
-        socket.on("sendMessage", ({
+        socket.on("sendMessage", async ({
           firstName,
           ProfileImage,
           loggedInUserId,
           targetId,
           text,
         })=>{
-          const roomId = getRoomId(loggedInUserId, targetId);
-          console.log(firstName + ' ' + text)
-          io.to(roomId).emit("messageRecevied",{firstName,ProfileImage,text})
+          try{
+            const roomId = getRoomId(loggedInUserId, targetId);
+  
+            // save in Db
+            let chat = await Chat.findOne({
+              participants: {$all : [loggedInUserId, targetId]},
+            })
+  
+            if(!chat){
+              chat = new Chat({
+                participants: [loggedInUserId, targetId],
+                messages: [],
+              })
+            }
+  
+            chat.messages.push({
+              senderId: loggedInUserId,
+              text
+            });
+            await chat.save();
+
+            io.to(roomId).emit("messageRecevied",{loggedInUserId,firstName,ProfileImage,text})
+
+          }
+          catch(err){
+            console.log(err);
+          }
         })
       });
 }

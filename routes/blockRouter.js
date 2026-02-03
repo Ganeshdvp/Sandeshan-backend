@@ -107,3 +107,44 @@ blockRouter.delete('/unblock/:id', userAuth, async (req,res)=>{
         res.status(400).json({message: err.message})
     }
 })
+
+// remove user
+blockRouter.patch('/remove/:id', userAuth, async (req,res)=>{
+    try{
+        const loggedInUser = req.user;
+        const toUserId = req.params.id;
+
+        const isUserExists = await User.findById(toUserId);
+        if(!isUserExists){
+            res.status(400).json({message: 'User not found!'})
+        }
+
+        if(loggedInUser._id == toUserId){
+            res.status(400).json({message: 'You cannot remove your self!'})
+        }
+
+        const isAlreadyBlocked = await UserRequests.findOneAndDelete({
+            $or : [
+                {fromUserId : loggedInUser._id, toUserId: toUserId, status: 'blocked'},
+                {fromUserId: toUserId, toUserId: loggedInUser._id, status: 'blocked'}
+            ]
+        })
+        if(!isAlreadyBlocked){
+            res.status(400).json({message: "User is not valid!"})
+        }
+
+        const removeUser = new UserRequests({
+            fromUserId: loggedInUser._id,
+            toUserId: toUserId,
+            status: 'removed'
+        })
+
+        await removeUser.save();
+
+        res.json({message: "You removed the user successfully!"})
+
+    }
+    catch(err){
+        res.status(400).json({message: err.message})
+    }
+})
