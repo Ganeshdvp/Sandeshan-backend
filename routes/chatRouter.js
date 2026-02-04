@@ -43,7 +43,9 @@ chatRouter.get('/chat/:targetId', userAuth, async (req,res)=>{
                 messages: []
             });
         }
+
         await chat.save();
+
         res.json({data: chat})
     }
     catch(err){

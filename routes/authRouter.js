@@ -60,7 +60,7 @@ authRouter.post('/signin', async (req,res)=>{
    const isPasswordValid = await bcrypt.compare(password, isUserPresent.password)
 
    // logged User without sending password back
-   const loggedUserData = await User.findOne({emailId: emailId}).select("firstName lastName emailId age gender location ProfileImage bgImage about")
+   const loggedUserData = await User.findOne({emailId: emailId}).select("firstName lastName emailId age gender location ProfileImage bgImage about createdAt updatedAt")
 
    if(isPasswordValid){
     // creating jwt token

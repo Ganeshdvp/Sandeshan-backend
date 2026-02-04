@@ -10,6 +10,10 @@ export const usersRouter = express.Router();
 usersRouter.get('/users', userAuth, async (req, res) => {
     try {
         const loggedInUser = req.user;
+        const page = parseInt(req.query.page) || 1;
+        let limit = parseInt(req.query.limit) || 10;
+        limit = limit > 50 ? 50 : limit;
+        const skip = (page - 1) * limit
 
         // find requests in DB
         const findRequests = await UserRequests.find({   //array
@@ -27,7 +31,7 @@ usersRouter.get('/users', userAuth, async (req, res) => {
 
         const filterUsers = await User.find({
             $and: [{ _id: { $ne: loggedInUser._id } }, { _id: { $nin: Array.from(hideUserFromFeed) } }]
-        })
+        }).skip(skip).limit(limit)
 
 
         // send response back
