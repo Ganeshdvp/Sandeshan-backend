@@ -3,20 +3,22 @@ import crypto from 'crypto';
 import { Chat } from "../models/chat.js";
 import { User } from '../models/users.js';
 
+// room id
 const getRoomId = (loggedInUserId, targetId) => {
   return crypto.createHash("sha256").update([loggedInUserId, targetId].sort().join('$')).digest("hex");
 }
 
-
 export const initialSocketConnection = (httpServer) => {
+  // server of websockets and enable cors
   const io = new Server(httpServer, {
     cors: {
-      origin: ["http://localhost:5173"],
+      origin: ["http://localhost:5173"], // frontend url
     }
   });
 
+  // socket connection
   io.on("connection", (socket) => {
-    // handlers
+    // event handlers
     socket.on("joinChat", async ({ firstName, ProfileImage, loggedInUserId, targetId }) => {
       const roomId = getRoomId(loggedInUserId, targetId);
 

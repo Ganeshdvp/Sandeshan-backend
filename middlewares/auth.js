@@ -4,7 +4,7 @@ import { User } from "../models/users.js";
 
 export const userAuth = async (req,res,next)=>{
  try{
-       // read token
+   // read token
     const {token} = req.cookies
 
     if(!token){

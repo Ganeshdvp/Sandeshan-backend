@@ -17,6 +17,7 @@ import { chatRouter } from './routes/chatRouter.js';
 
 
 const app = express();
+const PORT=3000
 
 // cors
 app.use(cors({
@@ -49,7 +50,7 @@ initialSocketConnection(httpServer);
 connectDB()
   .then(() => {
     console.log("Database connected successfully");
-    httpServer.listen(process.env.PORT, () => {
+    httpServer.listen(PORT, () => {
       console.log(`server running successfully ${process.env.PORT}`);
     });
   })

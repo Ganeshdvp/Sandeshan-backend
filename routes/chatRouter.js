@@ -6,6 +6,7 @@ import { UserRequests } from '../models/requests.js';
 
 export const chatRouter = express.Router();
 
+// chat retrieve
 chatRouter.get('/chat/:targetId', userAuth, async (req,res)=>{
     try{
         const loggedInUserId = req.user._id;

@@ -89,7 +89,3 @@ requestRouter.post('/requests/:status/:id',userAuth, async (req,res)=>{  // acce
         res.status(400).json({message: "ERROR : " + err.message})
     }
 })
-
-
-
-// block request

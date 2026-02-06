@@ -1,5 +1,6 @@
 import validator from 'validator';
 
+// signUp data validations
 export const validateSignUpData = (req)=>{
     const {firstName, lastName, emailId, password, age, gender, location, ProfileImage, bgImage, about} = req;
 
@@ -26,12 +27,14 @@ export const validateSignUpData = (req)=>{
     }
 }
 
+// signIn data validations
 export const validateSignInPasswordData = (req)=>{
     if(!validator.isStrongPassword(req)){
         throw new Error("Password invalid")
     }
 }
 
+// edit profile data validations
 export const validateEditProfileData = (req)=>{
     const ALLOWED_DATA = [
       "firstName",
@@ -51,6 +54,7 @@ export const validateEditProfileData = (req)=>{
     return isUpdatedAllowed;
 }
 
+// edit password data validations
 export const validateEditPasswordData = (req)=>{
     if(!validator.isStrongPassword(req)){
         throw new Error("Password invalid")

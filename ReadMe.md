@@ -3,37 +3,37 @@
 
 # API Design
 
-Authenticated
+Authentication
 - POST /signup
 - POST /login
-- DELETE /logout
+- POST /logout
 
 Profile
 - GET /profile
 - PATCH /profile/edit
-- PATCH /password
+- PATCH /profile/forgot-password
 
 All users
 - GET /users
-- GET /users/:emailId  -- filter
-- POST /user/send-request  -- friend request
+- POST /user/requested/:id   ----to send friend request
 
 All requests
 - GET /requests
-- GET /requests/:emailId  -- filter
-- POST /requests/accept
-- DELETE /requests/reject
-
+- POST /requests/accept/:id
+- POST /requests/reject/:id
 
 All friends
 - GET /friends
-- GET /friends/:emailId
-- DELETE /friend/unfriend
-- DELETE /friend/block
-
+- DEL /unfriend/:id
+- POST /blocked/:id
 
 Blocked users
-- GET /users/block
+- GET /blocked-users
+- DEL /unblock/:id
+- PATCH /remove/:id
+
+Chat
+- GET /chat/:targetId
 
 
 
@@ -256,16 +256,6 @@ app.use('/', profileRouter);
 - create usersRouter.js file in routes folder
     - write GET /users Api logic
     - write POST /user/:status/:id Api logic
-
-
-
-
-
-
-
-
-
-
 
 
 
