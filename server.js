@@ -21,7 +21,7 @@ const PORT=3000
 
 // cors
 app.use(cors({
-  origin: "http://localhost:5173",
+  origin: "https://sandeshan-frontendd.vercel.app",
   credentials: true
 }));
 // convert data to json

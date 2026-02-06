@@ -12,7 +12,7 @@ export const initialSocketConnection = (httpServer) => {
   // server of websockets and enable cors
   const io = new Server(httpServer, {
     cors: {
-      origin: ["http://localhost:5173"], // frontend url
+      origin: ["https://sandeshan-frontendd.vercel.app"], // frontend url
     }
   });
 
