@@ -12,7 +12,8 @@ export const initialSocketConnection = (httpServer) => {
   // server of websockets and enable cors
   const io = new Server(httpServer, {
     cors: {
-      origin: ["https://sandeshan-frontend.vercel.app"], // frontend url
+      origin: ["https://sandeshan-frontend.vercel.app"],   // frontend url
+      credentials: true,
     }
   });
 
