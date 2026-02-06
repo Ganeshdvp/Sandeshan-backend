@@ -21,7 +21,7 @@ const PORT=3000
 
 // cors
 app.use(cors({
-  origin: "https://sandeshan-frontendd.vercel.app",
+  origin: "https://sandeshan-frontendd-gpztgg0jy-ganeshs-projects-18c9ea29.vercel.app",
   credentials: true
 }));
 // convert data to json
@@ -51,7 +51,7 @@ connectDB()
   .then(() => {
     console.log("Database connected successfully");
     httpServer.listen(PORT, () => {
-      console.log(`server running successfully ${process.env.PORT}`);
+      console.log(`server running successfully ${PORT}`);
     });
   })
   .catch((err) => {
