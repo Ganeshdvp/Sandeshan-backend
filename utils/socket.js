@@ -12,7 +12,7 @@ export const initialSocketConnection = (httpServer) => {
   // server of websockets and enable cors
   const io = new Server(httpServer, {
     cors: {
-      origin: ["https://sandeshan-frontend.vercel.app"],   // frontend url
+      origin: ["https://sandeshan-frontend.vercel.app"],  // frontend url
       credentials: true,
     }
   });
@@ -22,12 +22,18 @@ export const initialSocketConnection = (httpServer) => {
     // event handlers
     socket.on("joinChat", async ({ firstName, ProfileImage, loggedInUserId, targetId }) => {
       const roomId = getRoomId(loggedInUserId, targetId);
-
-      const targetUser = await User.findById(targetId).select("firstName ProfileImage");
-
       socket.join(roomId);
 
-      io.to(roomId).emit("joinedRoom", { targetName: targetUser?.firstName, ProfileImage: targetUser.ProfileImage })
+      // find both users in DB
+      const targetUser = await User.findById(targetId).select("firstName ProfileImage");
+      const loggedInUser = await User.findById(loggedInUserId).select("firstName ProfileImage");
+
+      socket.emit("joinedRoom", {
+        targetName: targetUser?.firstName,
+        ProfileImage: targetUser?.ProfileImage
+      })
+      
+      socket.to(roomId).emit("joinedRoom", { targetName: loggedInUser?.firstName, ProfileImage: loggedInUser?.ProfileImage })
     }),
 
       socket.on("sendMessage", async ({

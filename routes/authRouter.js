@@ -66,7 +66,12 @@ authRouter.post('/signin', async (req,res)=>{
     // creating jwt token
     const token = jwt.sign({_id : isUserPresent._id},process.env.JWT_SECRET, { expiresIn: '1d' });
     // set in cookie and send response
-    res.cookie("token", token)
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,        // REQUIRED on Render (HTTPS)
+      sameSite: "none",    // REQUIRED for cross-site cookies
+      path: "/",  
+    })
     res.json({message: "Sign in successfully!", data: loggedUserData})
    }
    else{
