@@ -259,7 +259,14 @@ app.use('/', profileRouter);
 
 
 
-# Websockets
+# Task-8
 - Install websockets
     - npm install socket.io
-- 
+- create socket.js file and configure.
+- created chat.js model and wrote the db logic
+- created chatRouter.js file and wrote api logic
+
+# Task-9
+- Deployed on Render
+
+- Boom🎉
