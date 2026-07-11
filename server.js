@@ -32,6 +32,12 @@ dotenv.config();
 app.use(cookieParser())
 
 
+// ping route for uptimeRobot
+app.get("/ping", (req, res) => {
+  res.status(200).send("OK");
+});
+
+
 // routes
 app.use('/', authRouter);
 app.use('/', profileRouter);
@@ -39,7 +45,7 @@ app.use('/', usersRouter);
 app.use('/', requestRouter);
 app.use('/', friendsRouter);
 app.use('/', blockRouter);
-app.use('/', chatRouter)
+app.use('/', chatRouter);
 
 
 // websocket
